@@ -286,7 +286,6 @@ struct zspage {
 	unsigned int freeobj;
 	struct page *first_page;
 	struct list_head list; /* fullness list */
-	struct zs_pool *pool;
 #ifdef CONFIG_COMPACTION
 	rwlock_t lock;
 #endif
@@ -1113,7 +1112,6 @@ static struct zspage *alloc_zspage(struct zs_pool *pool,
 
 	create_page_chain(class, zspage, pages);
 	init_zspage(class, zspage);
-	zspage->pool = pool;
 
 	return zspage;
 }
@@ -2051,12 +2049,11 @@ static int zs_page_migrate(struct address_space *mapping, struct page *newpage,
 	VM_BUG_ON_PAGE(!PageIsolated(page), page);
 
 	zspage = get_zspage(page);
-	pool = zspage->pool;
 
 	/* Concurrent compactor cannot migrate any subpage in zspage */
-	pool = zspage->pool;
-	spin_lock(&pool->lock);
+	migrate_write_lock(zspage);
 	get_zspage_mapping(zspage, &class_idx, &fullness);
+	pool = mapping->private_data;
 	class = pool->size_class[class_idx];
 	offset = get_first_obj_offset(page);
 
@@ -2148,7 +2145,7 @@ unpin_objects:
 	}
 	kunmap_atomic(s_addr);
 	spin_unlock(&class->lock);
-        spin_unlock(&pool->lock);
+	migrate_write_unlock(zspage);
 
 	return ret;
 }
@@ -2166,8 +2163,6 @@ static void zs_page_putback(struct page *page)
 	VM_BUG_ON_PAGE(!PageIsolated(page), page);
 
 	zspage = get_zspage(page);
-	pool = zspage->pool;
-	spin_lock(&pool->lock);
 	get_zspage_mapping(zspage, &class_idx, &fg);
 	mapping = page_mapping(page);
 	pool = mapping->private_data;
@@ -2175,7 +2170,6 @@ static void zs_page_putback(struct page *page)
 
 	spin_lock(&class->lock);
 	dec_zspage_isolation(zspage);
-	spin_unlock(&pool->lock);
 	if (!is_zspage_isolated(zspage)) {
 		/*
 		 * Due to page_lock, we cannot free zspage immediately
