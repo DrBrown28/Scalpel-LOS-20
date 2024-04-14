@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Kernel Details
-VER="-7.2"
+VER="-8.0"
 
 # Vars
 BASE_AK_VER="SCALPEL_By_DrBrown28-DD3BOH"
@@ -13,7 +13,7 @@ export SUBARCH=arm64
 export CONFIG_BASE=vendor/kona-perf_defconfig
 export CONFIG_DEVICE=vendor/nx659j.config
 #export PATH=home/toolchains/proton-clang-13/bin:$PATH
-export PATH=home/clang-19/bin:$PATH
+export PATH=home/toolchains/clang-19/bin:$PATH
 #export PATH=home/toolchains/Clang-18.0.0-20231114/bin:$PATH
 
 echo "#"
