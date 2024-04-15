@@ -40,9 +40,9 @@ ls -a
 echo "#"
 echo "# Zipping into a flashable zip!"
 echo "#"
-cp out/arch/arm64/boot/Image.gz ~/AnyKernel3/
-cp out/arch/arm64/boot/dtb ~/AnyKernel3/
-cd ~/Anykernel3
+cp out/arch/arm64/boot/Image.gz root/AnyKernel3/
+cp out/arch/arm64/boot/dtb root/AnyKernel3/
+cd root/Anykernel3
 zip -r9 Scalpel-Kernel-By-DrBrown28.zip *
 cp Scalpel-Kernel-By-DrBrown28.zip ../$HOME
 echo -e "\033[1;36mPress enter to continue \e[0m"

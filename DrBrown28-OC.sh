@@ -42,8 +42,8 @@ echo "#"
 cp out/arch/arm64/boot/Image.gz root/AnyKernel3/
 cp out/arch/arm64/boot/dtb root/AnyKernel3/
 cd root/Anykernel3
-zip -r9 Scalpel-Kernel-By-DrBrown28.zip *
-cp Scalpel-Kernel-By-DrBrown28.zip ../$HOME
+zip -r9 Scalpel-Kernel-By-DrBrown28-OC.zip *
+cp Scalpel-Kernel-By-DrBrown28-OC.zip ../$HOME
 echo -e "\033[1;36mPress enter to continue \e[0m"
 read a1
 
