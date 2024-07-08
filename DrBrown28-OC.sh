@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Kernel Details
-VER="-8.3-OC"
+VER="-8.4-OC"
 
 # Vars
 BASE_AK_VER="SCALPEL_By_DrBrown28-DD3BOH"
