@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 
 # Kernel Details
-VER="-8.7-OC"
+VER="-8.8-OC"
 
 # Vars
-BASE_AK_VER="SCALPEL_By_DrBrown28-DD3BOH"
+BASE_AK_VER="SCALPEL_By_DrBrown28"
 AK_VER="$BASE_AK_VER$VER"
 export LOCALVERSION=~`echo $AK_VER`
 export ARCH=arm64
